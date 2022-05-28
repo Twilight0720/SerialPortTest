@@ -181,7 +181,7 @@ public class SerialPortController {
      * 添加监听器
      *
      * @param serialPort 串口对象
-     * @param listener   串口存在有效数据监听
+     * @param listener   串口事件监听器，意味着串口存在有效数据监听
      */
     public void addListener(SerialPort serialPort, SerialPortEventListener listener) {
         //串口空，返回
