@@ -249,9 +249,7 @@ public class MainFrame extends JFrame {
                     SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
             if (serialport != null) {
-                dataView.setText("串口已打开" + "\r\n");
                 serialPortOperate.setText("关闭串口");
-
             }
         }
 
@@ -295,7 +293,7 @@ public class MainFrame extends JFrame {
     private void closeSerialPort(ActionEvent evt) {
 
         controller.closePort(serialport);
-        dataView.setText("串口已关闭" + "\r\n");
+
         serialPortOperate.setText("打开串口");
         serialport = null;
     }
