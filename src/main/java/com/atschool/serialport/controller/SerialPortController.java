@@ -1,14 +1,13 @@
 package com.atschool.serialport.controller;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.atschool.serialport.listener.DataAvailableListener;
 import com.atschool.serialport.listener.SerialPortListener;
-import com.atschool.serialport.utils.DataUtils;
-import com.atschool.serialport.utils.ShowUtils;
 import gnu.io.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -32,7 +31,7 @@ public class SerialPortController {
         Enumeration<CommPortIdentifier> portList = CommPortIdentifier.getPortIdentifiers();
 
         //将可用串口名添加到portNameList
-        while(portList.hasMoreElements()){
+        while (portList.hasMoreElements()) {
             String portName = portList.nextElement().getName();
 //            System.out.println(portName);
             portNameList.add(portName);
@@ -103,22 +102,28 @@ public class SerialPortController {
             return;
         }
 
-        OutputStream os = null;
+//        OutputStream os = null;
+        PrintStream ps = null;
         try {
             //获取输出流
-            os = serialPort.getOutputStream();
-            os.write(data);
-            os.flush();
+            ps = new PrintStream(serialPort.getOutputStream(), true, "utf-8");
+            ps.print(new String(data));
+//            os = serialPort.getOutputStream();
+//            os.write(data);
+//            os.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (os != null) {
-                try {
-                    os.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+//            if (os != null) {
+//                try {
+//                    os.close();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//            }
+            if (ps != null) {
+                ps.close();
             }
         }
     }
@@ -131,8 +136,12 @@ public class SerialPortController {
      */
     public static byte[] readFromPort(SerialPort serialPort) {
 
+        byte[] result = null;
+        if (serialPort == null) {
+            return result;
+        }
+
         InputStream is = null;
-        byte[] result = {};
         try {
             //获取输入流
             is = serialPort.getInputStream();
@@ -140,9 +149,21 @@ public class SerialPortController {
             //设置缓冲区大小为一个字节
             byte[] buffer = new byte[1];
 
-            int len;
-            while ((len = is.read(buffer)) != -1) {
-                result = DataUtils.concatArray(result, buffer);
+//            int len;
+//            while((len = is.read(buffer)) != -1){
+//                result = ArrayUtil.addAll(result, buffer);
+//            }
+
+//            int len = is.available();//获取数据长度
+//            while (len != 0) {
+//                is.read(buffer);
+//                result = ArrayUtil.addAll(result, buffer);
+//                len = is.available();//需要重新获取数据长度
+//            }
+            /*简化*/
+            while (is.available() != 0){
+                is.read(buffer);
+                result = ArrayUtil.addAll(result, buffer);
             }
 
         } catch (IOException e) {

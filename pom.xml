@@ -18,6 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
+        <hutool.version>5.5.4</hutool.version>
         <rxtx.version>2.1.7</rxtx.version>
         <external.version>RELEASE100</external.version>
         <swinglabs.version>1.0.3</swinglabs.version>
@@ -28,6 +29,11 @@
             <groupId>org.rxtx</groupId>
             <artifactId>rxtx</artifactId>
             <version>${rxtx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
         <dependency>
             <groupId>org.netbeans.external</groupId>

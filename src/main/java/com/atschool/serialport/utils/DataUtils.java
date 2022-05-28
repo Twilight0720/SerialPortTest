@@ -12,25 +12,6 @@ import java.util.Locale;
 public class DataUtils {
 
     /**
-     * 合并数组
-     *
-     * @param firstArray  第一个数组
-     * @param secondArray 第二个数组
-     * @return 合并后的数组
-     */
-    public static byte[] concatArray(byte[] firstArray, byte[] secondArray) {
-
-        if (firstArray == null || secondArray == null) {
-            return null;
-        }
-
-        byte[] bytes = new byte[firstArray.length + secondArray.length];
-        System.arraycopy(firstArray, 0, bytes, 0, firstArray.length);
-        System.arraycopy(secondArray, 0, bytes, firstArray.length, secondArray.length);
-        return bytes;
-    }
-
-    /**
      * 十六进制字符串转byte[]
      *
      * @param hex 十六进制字符串

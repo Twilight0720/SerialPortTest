@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
     public static final int HEIGHT = 390;
 
     // 数据显示区
-    private JTextArea dataView = new JTextArea();
+    public static JTextArea dataView = new JTextArea();
     private JScrollPane scrollDataView = new JScrollPane(dataView);
 
 
@@ -47,7 +47,7 @@ public class MainFrame extends JFrame {
     private JPanel operatePanel = new JPanel();
     private JTextArea dataInput = new JTextArea();
     private JButton serialPortOperate = new JButton("打开串口");
-    private JButton sendData = new JButton("发送数据");
+    private JButton dataSend = new JButton("发送数据");
 
     // 串口列表
     private List<String> commList = null;
@@ -131,9 +131,9 @@ public class MainFrame extends JFrame {
         serialPortOperate.setBounds(45, 95, 90, 20);
         operatePanel.add(serialPortOperate);
 
-        sendData.setFocusable(false);
-        sendData.setBounds(180, 95, 90, 20);
-        operatePanel.add(sendData);
+        dataSend.setFocusable(false);
+        dataSend.setBounds(180, 95, 90, 20);
+        operatePanel.add(dataSend);
     }
 
     /**
@@ -212,7 +212,7 @@ public class MainFrame extends JFrame {
         });
 
         // 发送数据
-        sendData.addActionListener(new ActionListener() {
+        dataSend.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -244,6 +244,7 @@ public class MainFrame extends JFrame {
             if (serialport != null) {
                 dataView.setText("串口已打开" + "\r\n");
                 serialPortOperate.setText("关闭串口");
+
             }
         }
 
@@ -320,6 +321,24 @@ public class MainFrame extends JFrame {
         // 以十六进制的形式发送数据
         if (dataHexChoice.isSelected()) {
             SerialPortController.sendToPort(serialport, DataUtils.hexStr2Byte(data));
+        }
+    }
+
+    /**
+     * 接收数据
+     */
+    private void receiveData(){
+        // 读取串口数据
+        byte[] data = SerialPortController.readFromPort(serialport);
+
+        // 以字符串的形式接收数据
+        if (dataASCIIChoice.isSelected()) {
+            dataView.append(new String(data) + "\r\n");
+        }
+
+        // 以十六进制的形式接收数据
+        if (dataHexChoice.isSelected()) {
+            dataView.append(DataUtils.byteArrayToHexString(data) + "\r\n");
         }
     }
 }
