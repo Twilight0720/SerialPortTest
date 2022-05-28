@@ -1,8 +1,6 @@
 package com.atschool.serialport.controller;
 
 import cn.hutool.core.util.ArrayUtil;
-import com.atschool.serialport.listener.DataAvailableListener;
-import com.atschool.serialport.listener.SerialPortListener;
 import gnu.io.*;
 
 import java.io.IOException;
@@ -24,7 +22,7 @@ public class SerialPortController {
      *
      * @return 可用端口名称列表
      */
-    public static List<String> findPorts() {
+    public List<String> findPorts() {
         //保存所有可用串口
         List<String> portNameList = new ArrayList<>();
         //获得当前所有可用串口
@@ -59,7 +57,7 @@ public class SerialPortController {
      * @param verify   校验位
      * @return 返回对应被打开的串口
      */
-    public static SerialPort openPort(String portName, Integer baudRate, Integer data,
+    public SerialPort openPort(String portName, Integer baudRate, Integer data,
                                       Integer stop, Integer verify) {
 
         SerialPort serialPort = null;
@@ -75,9 +73,9 @@ public class SerialPortController {
                 //设置串口波特率等参数（数据位data、停止位stop、校验位verify）
                 serialPort.setSerialPortParams(baudRate, data, stop, verify);
                 System.out.println("串口打开成功");
-
             } else {
-                System.out.println(portName + "不是串口，打开失败");
+//                System.out.println(portName + "不是串口，打开失败");
+                throw new NoSuchPortException();
             }
         } catch (NoSuchPortException e) {
             throw new RuntimeException(e);
@@ -86,7 +84,6 @@ public class SerialPortController {
         } catch (UnsupportedCommOperationException e) {
             throw new RuntimeException(e);
         }
-
         return serialPort;
     }
 
@@ -96,7 +93,7 @@ public class SerialPortController {
      * @param serialPort 串口对象
      * @param data       待发送数据
      */
-    public static void sendToPort(SerialPort serialPort, byte[] data) {
+    public void sendToPort(SerialPort serialPort, byte[] data) {
         //串口为空，返回
         if (serialPort == null) {
             return;
@@ -134,7 +131,7 @@ public class SerialPortController {
      * @param serialPort 当前已建立连接的SerialPort对象
      * @return 读取到的数据（字节形式）
      */
-    public static byte[] readFromPort(SerialPort serialPort) {
+    public byte[] readFromPort(SerialPort serialPort) {
 
         byte[] result = null;
         if (serialPort == null) {
@@ -186,14 +183,14 @@ public class SerialPortController {
      * @param serialPort 串口对象
      * @param listener   串口存在有效数据监听
      */
-    public static void addListener(SerialPort serialPort, DataAvailableListener listener) {
+    public void addListener(SerialPort serialPort, SerialPortEventListener listener) {
         //串口空，返回
         if (serialPort == null) {
             return;
         }
         try {
             //给串口添加监听器
-            serialPort.addEventListener(new SerialPortListener(listener));
+            serialPort.addEventListener(listener);
             //设置当有数据到达时唤醒监听接收线程
             serialPort.notifyOnDataAvailable(true);
             //设置当通信中断时唤醒中断线程
@@ -209,7 +206,7 @@ public class SerialPortController {
      *
      * @param serialPort 串口名
      */
-    public static void closePort(SerialPort serialPort) {
+    public void closePort(SerialPort serialPort) {
         if (serialPort != null) {
             serialPort.close();
         }
