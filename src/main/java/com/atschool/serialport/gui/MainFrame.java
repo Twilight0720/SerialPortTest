@@ -36,7 +36,7 @@ public class MainFrame extends JFrame {
 
     // 串口设置面板
     private JPanel serialPortPanel = new JPanel();
-    private JLabel serialPortLabel = new JLabel("串口");
+    private JLabel serialPortLabel = new JLabel("串口号");
     private JLabel baudrateLabel = new JLabel("波特率");
     private JComboBox commChoice = new JComboBox();
     private JComboBox baudrateChoice = new JComboBox();
@@ -47,8 +47,8 @@ public class MainFrame extends JFrame {
     // 操作面板
     private JPanel operatePanel = new JPanel();
     private JTextArea dataInput = new JTextArea();
-    private JButton serialPortOperate = new JButton("打开串口");
-    private JButton dataSend = new JButton("发送数据");
+    private JButton serialPortOperate = new JButton("开启串口");
+    private JButton dataSend = new JButton("发送");
 
     // 串口列表
     private List<String> commList = null;
@@ -97,20 +97,22 @@ public class MainFrame extends JFrame {
         serialPortPanel.setLayout(null);
         add(serialPortPanel);
 
-        serialPortLabel.setForeground(Color.lightGray);
         serialPortLabel.setBounds(10, 25, 40, 20);
         serialPortPanel.add(serialPortLabel);
+        serialPortLabel.setForeground(Color.BLACK);
 
         commChoice.setFocusable(false);
+        commChoice.setBackground(Color.WHITE);
         commChoice.setBounds(60, 25, 100, 20);
         serialPortPanel.add(commChoice);
 
-        baudrateLabel.setForeground(Color.gray);
+        baudrateLabel.setForeground(Color.BLACK);
         baudrateLabel.setBounds(10, 60, 40, 20);
         serialPortPanel.add(baudrateLabel);
 
         baudrateChoice.setFocusable(false);
         baudrateChoice.setBounds(60, 60, 100, 20);
+        baudrateChoice.setBackground(Color.WHITE);
         serialPortPanel.add(baudrateChoice);
 
         dataASCIIChoice.setBounds(20, 95, 55, 20);
@@ -132,10 +134,12 @@ public class MainFrame extends JFrame {
         operatePanel.add(dataInput);
 
         serialPortOperate.setFocusable(false);
+        serialPortOperate.setBackground(Color.WHITE);
         serialPortOperate.setBounds(350, 25, 120, 25);
         operatePanel.add(serialPortOperate);
 
         dataSend.setFocusable(false);
+        dataSend.setBackground(Color.WHITE);
         dataSend.setBounds(350, 65, 120, 25);
         operatePanel.add(dataSend);
     }
