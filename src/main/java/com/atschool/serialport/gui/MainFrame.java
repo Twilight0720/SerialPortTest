@@ -2,7 +2,7 @@ package com.atschool.serialport.gui;
 
 import com.atschool.serialport.controller.SerialPortController;
 import com.atschool.serialport.utils.DataUtils;
-import com.atschool.serialport.utils.ShowUtils;
+import com.atschool.serialport.utils.TipsUtils;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
@@ -153,7 +153,7 @@ public class MainFrame extends JFrame {
 
         // 检查是否有可用串口，有则加入选项中
         if (commList == null || commList.size() < 1) {
-            ShowUtils.warningMessage("没有搜索到有效串口！");
+            TipsUtils.warningMessage("没有搜索到有效串口！");
         } else {
             for (String s : commList) {
                 commChoice.addItem(s);
@@ -187,7 +187,7 @@ public class MainFrame extends JFrame {
                 commList = controller.findPorts();
                 // 检查是否有可用串口，有则加入选项中
                 if (commList == null || commList.size() < 1) {
-                    ShowUtils.warningMessage("没有搜索到有效串口！");
+                    TipsUtils.warningMessage("没有搜索到有效串口！");
                 } else {
                     int index = commChoice.getSelectedIndex();
                     commChoice.removeAllItems();
@@ -247,7 +247,7 @@ public class MainFrame extends JFrame {
 
         // 检查串口名称是否获取正确
         if (commName == null || commName.equals("")) {
-            ShowUtils.warningMessage("没有搜索到有效串口！");
+            TipsUtils.warningMessage("没有搜索到有效串口！");
         } else {
             serialport = controller.openPort(commName, baudrate, SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
@@ -265,7 +265,7 @@ public class MainFrame extends JFrame {
                 byte[] data = null;
                 try {
                     if (serialport == null) {
-                        ShowUtils.errorMessage("串口对象为空，监听失败！");
+                        TipsUtils.errorMessage("串口对象为空，监听失败！");
                     } else {
                         // 读取串口数据
                         data = controller.readFromPort(serialport);
@@ -281,7 +281,7 @@ public class MainFrame extends JFrame {
                         }
                     }
                 } catch (Exception e) {
-                    ShowUtils.errorMessage(e.toString());
+                    TipsUtils.errorMessage(e.toString());
                     // 发生读取错误时显示错误信息后退出系统
                     System.exit(0);
                 }
@@ -312,12 +312,12 @@ public class MainFrame extends JFrame {
         String data = dataInput.getText().toString();
 
         if (serialport == null) {
-            ShowUtils.warningMessage("请先打开串口！");
+            TipsUtils.warningMessage("请先打开串口！");
             return;
         }
 
         if ("".equals(data) || data == null) {
-            ShowUtils.warningMessage("请输入要发送的数据！");
+            TipsUtils.warningMessage("请输入要发送的数据！");
             return;
         }
 

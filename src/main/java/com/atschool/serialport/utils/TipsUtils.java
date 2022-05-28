@@ -8,7 +8,7 @@ import javax.swing.*;
  * @author whoo
  * @create 2022-05-27 21:13
  */
-public class ShowUtils {
+public class TipsUtils {
 
     /**
      * 消息提示
