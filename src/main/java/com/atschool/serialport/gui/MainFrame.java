@@ -214,7 +214,7 @@ public class MainFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("打开串口".equals(serialPortOperate.getText()) && serialport == null) {
+                if ("开启串口".equals(serialPortOperate.getText()) && serialport == null) {
                     openSerialPort(e);
                 } else {
                     closeSerialPort(e);
@@ -298,7 +298,7 @@ public class MainFrame extends JFrame {
 
         controller.closePort(serialport);
 
-        serialPortOperate.setText("打开串口");
+        serialPortOperate.setText("开启串口");
         serialport = null;
     }
 
@@ -312,7 +312,7 @@ public class MainFrame extends JFrame {
         String data = dataInput.getText().toString();
 
         if (serialport == null) {
-            TipsUtils.warningMessage("请先打开串口！");
+            TipsUtils.warningMessage("请先开启串口！");
             return;
         }
 
