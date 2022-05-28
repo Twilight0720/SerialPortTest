@@ -328,7 +328,7 @@ public class MainFrame extends JFrame {
 
         // 以十六进制的形式发送数据
         if (dataHexChoice.isSelected()) {
-            controller.sendToPort(serialport, DataUtils.hexStr2Byte(data));
+            controller.sendToPort(serialport, DataUtils.hexStrToByte(data));
         }
     }
 

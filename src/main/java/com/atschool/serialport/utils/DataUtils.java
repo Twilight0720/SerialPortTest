@@ -17,7 +17,7 @@ public class DataUtils {
      * @param hex 十六进制字符串
      * @return byte[]
      */
-    public static byte[] hexStr2Byte(String hex) {
+    public static byte[] hexStrToByte(String hex) {
 
         if (hex == null) {
             return new byte[]{};
