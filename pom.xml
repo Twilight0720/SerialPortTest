@@ -20,8 +20,6 @@
 
         <hutool.version>5.5.4</hutool.version>
         <rxtx.version>2.1.7</rxtx.version>
-        <external.version>RELEASE100</external.version>
-        <swinglabs.version>1.0.3</swinglabs.version>
     </properties>
 
     <dependencies>
